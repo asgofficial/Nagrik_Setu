@@ -1,0 +1,302 @@
+@import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
+
+:root {
+  --background: #fafaf9; /* warm off-white */
+  --bg-surface: #ffffff;
+  --bg-elevated: #f5f5f4;
+  --foreground: #1c1917; /* charcoal */
+  --text-secondary: #78716c;
+  --border-subtle: #e7e5e4;
+  --primary: #ff6a00; /* saffron orange */
+  --primary-hover: #e65c00;
+  --success: #10b981; /* emerald */
+  --warning: #f59e0b; /* amber */
+  --danger: #ef4444; /* red */
+  --info: #3b82f6; /* blue */
+  
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+  --color-info: var(--info);
+  
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  overflow-x: hidden;
+}
+
+/* --- Living Civic Ambient Light Field Background --- */
+.civic-ambient-bg {
+  background-image: 
+    radial-gradient(circle at 15% 20%, rgba(255, 106, 0, 0.05), transparent 40%),
+    radial-gradient(circle at 85% 65%, rgba(59, 130, 246, 0.04), transparent 40%),
+    radial-gradient(circle at 50% 90%, rgba(16, 185, 129, 0.04), transparent 45%);
+  background-size: 100% 100%;
+  transform: translateZ(0);
+}
+
+/* --- Interactive Card Polish & Light Sweep --- */
+.interactive-card {
+  transition: transform 220ms cubic-bezier(.2,.8,.2,1), box-shadow 220ms ease, border-color 220ms ease;
+  position: relative;
+  overflow: hidden;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+.interactive-card:hover {
+  transform: translateY(-4px) translateZ(0);
+  box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+}
+
+.card-sweep {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-sweep::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 35%, rgba(255, 255, 255, 0.18) 50%, transparent 65%);
+  transform: translateX(-120%) translateZ(0);
+  transition: transform 700ms ease;
+  pointer-events: none;
+  z-index: 10;
+  will-change: transform;
+}
+
+.card-sweep:hover::before {
+  transform: translateX(120%) translateZ(0);
+}
+
+/* --- AI Scanning Animation Line --- */
+.ai-scanning-line {
+  position: relative;
+  overflow: hidden;
+}
+
+.ai-scanning-line::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255, 106, 0, 0.8), transparent);
+  box-shadow: 0 0 8px rgba(255, 106, 0, 0.6);
+  animation: scanLine 2s linear infinite;
+}
+
+@keyframes scanLine {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(500%); }
+}
+
+/* --- Signal Convergence & Pulse Animation --- */
+@keyframes pulseRing {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 0.3;
+  }
+  100% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+}
+
+.pulse-signal {
+  animation: pulseRing 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* --- Accessibility Text Scaling --- */
+.text-scale-normal {
+  font-size: 16px;
+}
+.text-scale-large {
+  font-size: 19px;
+}
+.text-scale-large p, 
+.text-scale-large span,
+.text-scale-large li,
+.text-scale-large td,
+.text-scale-large button {
+  font-size: 1.15rem;
+}
+.text-scale-large h1 { font-size: 2.5rem; }
+.text-scale-large h2 { font-size: 2rem; }
+.text-scale-large h3 { font-size: 1.5rem; }
+
+.text-scale-xl {
+  font-size: 22px;
+}
+.text-scale-xl p, 
+.text-scale-xl span,
+.text-scale-xl li,
+.text-scale-xl td,
+.text-scale-xl button {
+  font-size: 1.3rem;
+}
+.text-scale-xl h1 { font-size: 3rem; }
+.text-scale-xl h2 { font-size: 2.4rem; }
+.text-scale-xl h3 { font-size: 1.8rem; }
+
+/* --- Smooth Theme Transition Helper --- */
+html.theme-transitioning,
+html.theme-transitioning *,
+html.theme-transitioning *::before,
+html.theme-transitioning *::after {
+  transition: background-color 300ms ease, border-color 300ms ease, color 300ms ease, fill 300ms ease, stroke 300ms ease !important;
+}
+
+/* --- High Contrast Mode --- */
+.high-contrast {
+  --background: #000000 !important;
+  --foreground: #ffffff !important;
+  --primary: #ffff00 !important; /* high contrast yellow */
+  --primary-hover: #ffff00 !important;
+  --success: #00ff00 !important; /* bright green */
+  --warning: #ffaa00 !important;
+  --danger: #ff0000 !important;
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+.high-contrast * {
+  border-color: #ffffff !important;
+  text-shadow: none !important;
+}
+
+.high-contrast button, 
+.high-contrast a {
+  background-color: #000000 !important;
+  color: #ffff00 !important;
+  border: 2px solid #ffffff !important;
+  outline: 2px solid transparent !important;
+}
+
+.high-contrast button:hover, 
+.high-contrast a:hover {
+  background-color: #ffff00 !important;
+  color: #000000 !important;
+}
+
+.high-contrast input, 
+.high-contrast textarea, 
+.high-contrast select {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border: 2px solid #ffffff !important;
+}
+
+/* Focus States */
+*:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Reduced Motion Override */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.reduce-motion * {
+  animation-delay: 0s !important;
+  animation-duration: 0s !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0s !important;
+  scroll-behavior: auto !important;
+}
+
+/* --- Leaflet Map Custom CSS --- */
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+  font-family: inherit;
+  background-color: #f5f5f4 !important;
+  z-index: 1;
+}
+
+.leaflet-bar {
+  border: none !important;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1) !important;
+}
+
+.leaflet-bar a {
+  background-color: white !important;
+  color: #1c1917 !important;
+  border-bottom: 1px solid #e7e5e4 !important;
+  transition: background-color 0.2s;
+}
+
+.leaflet-bar a:hover {
+  background-color: #f5f5f4 !important;
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: var(--radius-md) !important;
+  padding: 4px !important;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1) !important;
+}
+
+.leaflet-popup-tip {
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1) !important;
+}
+
+/* Custom Marker Styling */
+.custom-map-pin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  transition: transform 0.2s;
+}
+.custom-map-pin:hover {
+  transform: scale(1.15);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #d6d3d1;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a29e;
+}
