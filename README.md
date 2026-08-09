@@ -1,4 +1,5 @@
-# Jansetu (CivicTwin AI)
+# Nagrik_Setu
+(CivicTwin AI)
 
 ### Benefits Found. Voices Heard. Problems Solved.
 
