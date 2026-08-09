@@ -205,6 +205,21 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     return new Promise((resolve) => {
       navigator.geolocation.getCurrentPosition(
         async (position) => {
+          if (!position || !position.coords) {
+            setIsGpsLocating(false);
+            const errLoc: UserGpsLocation = {
+              latitude: 22.5726,
+              longitude: 88.3639,
+              displayName: 'Default Location (Kolkata)',
+              locality: 'Kolkata Central',
+              district: 'Kolkata',
+              state: 'West Bengal',
+              timestamp: new Date().toISOString(),
+              status: 'error'
+            };
+            setUserGpsLocation(errLoc);
+            return resolve(errLoc);
+          }
           const lat = position.coords.latitude;
           const lng = position.coords.longitude;
           

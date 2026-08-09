@@ -71,7 +71,7 @@ class NominatimProvider implements GeocodingProvider {
 
       return results.map((item: any) => {
         const addr = item.address || {};
-        const locality = addr.suburb || addr.neighbourhood || addr.village || addr.town || addr.city || item.display_name.split(',')[0];
+        const locality = addr.suburb || addr.neighbourhood || addr.village || addr.town || addr.city || (item.display_name ? item.display_name.split(',')[0] : 'Search Location');
         return {
           displayName: item.display_name,
           locality,

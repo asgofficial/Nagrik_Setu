@@ -162,7 +162,8 @@ export default function MapPage() {
   const handleSelectSearchedLocation = (loc: GeocodedLocation) => {
     setUserLocation([loc.latitude, loc.longitude]);
     setUserAccuracy(undefined);
-    setLocalityName(loc.locality || loc.displayName.split(',')[0]);
+    const dispName = loc.displayName || '';
+    setLocalityName(loc.locality || (dispName ? dispName.split(',')[0] : 'Selected Location'));
     setSearchResults([]);
     setSearchQuery('');
   };

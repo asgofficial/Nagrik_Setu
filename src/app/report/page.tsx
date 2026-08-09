@@ -140,6 +140,10 @@ export default function ReportIssue() {
     setIsLocating(true);
     navigator.geolocation.getCurrentPosition(
       async (position) => {
+        if (!position || !position.coords) {
+          setIsLocating(false);
+          return;
+        }
         const lat = position.coords.latitude;
         const lng = position.coords.longitude;
         setLatitude(lat);
