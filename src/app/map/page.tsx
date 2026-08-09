@@ -195,9 +195,10 @@ export default function MapPage() {
 
   // Sync user location from GPS context
   useEffect(() => {
-    if (userGpsLocation && userGpsLocation.latitude && userGpsLocation.longitude) {
+    if (userGpsLocation && typeof userGpsLocation.latitude === 'number' && typeof userGpsLocation.longitude === 'number') {
       setUserLocation([userGpsLocation.latitude, userGpsLocation.longitude]);
-      setLocalityName(userGpsLocation.locality || userGpsLocation.displayName.split(',')[0]);
+      const dispName = userGpsLocation.displayName || '';
+      setLocalityName(userGpsLocation.locality || (dispName ? dispName.split(',')[0] : 'Current Location'));
     }
   }, [userGpsLocation]);
 

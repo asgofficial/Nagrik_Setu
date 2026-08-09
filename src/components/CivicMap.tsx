@@ -132,6 +132,11 @@ export default function CivicMap({
             try { mapToRemove.stop(); } catch {}
           }
 
+          // Off all event listeners to prevent callbacks on unmounted map
+          if (typeof mapToRemove.off === 'function') {
+            try { mapToRemove.off(); } catch {}
+          }
+
           // Finally remove the map if remove exists
           if (typeof mapToRemove.remove === 'function') {
             try { mapToRemove.remove(); } catch {}
