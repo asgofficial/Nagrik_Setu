@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning className="h-full antialiased">
-      <body suppressHydrationWarning className="h-full min-h-screen flex flex-col bg-stone-50 dark:bg-stone-950 text-stone-900 dark:text-stone-50 civic-ambient-bg">
+      <body suppressHydrationWarning className="h-full min-h-screen flex flex-col bg-[var(--background)] text-[var(--foreground)] civic-ambient-bg">
         <script
           dangerouslySetInnerHTML={{
             __html: `(() => {
@@ -50,7 +50,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <AuthProvider>
           <AppProvider>
             <Navbar />
-            <main id="main-content" className="flex-1 min-h-0 flex flex-col pb-20 lg:pb-0">
+            <main id="main-content" className="flex-1 flex flex-col pb-20 lg:pb-0">
               {children}
             </main>
             <Footer />
